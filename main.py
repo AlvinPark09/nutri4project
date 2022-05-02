@@ -115,7 +115,7 @@ async def get_page(request: Request, img_s: UploadFile = File(...), disease : st
           else:
             nutri_list[i+1] = round((nutri_list[i+1] / nutri_reco_id[i])*100, 2)
     nutri_list = nutri_list[:-2]
-    
+
     dise_nutri = my_func.nutri_limit([disease, gender, age_range])
     df2 = dise_nutri[['영양성분', '섭취기준\n(1일)', '단위', '경고문구']]
     df2 = df2.set_index('영양성분')
@@ -207,8 +207,6 @@ async def get_history(request: Request):
               cur_index.append(idx)
   
   having = history.groupby(['id', 'date']).sum().reset_index()[condition2].iloc[:,cur_index].values[0]
-  print(having)
-  print(nutri_name)
   for i in range(len(nutri_std)):
     having[i] = round((having[i] / nutri_std[i])*100, 2)
     
@@ -216,11 +214,9 @@ async def get_history(request: Request):
         nutri_name[i] += unit[i]
   
   having = list(having)
-  print(having)
   
   nutri_name = list(nutri_name)
-  
-  print(nutri_name)
+
   return templates.TemplateResponse("history.html", {"request": request, 'nutri_list':nutri_list, 'nutri_name':nutri_name, 'having':having})
 
 @app.get('/use', response_class=HTMLResponse)
