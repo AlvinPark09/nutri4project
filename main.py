@@ -130,18 +130,17 @@ async def get_page(request: Request, img_s: UploadFile = File(...), disease : st
     temp = pd.DataFrame(temp)
     temp.columns = ['경고메세지']
     temp = temp.style.hide_index()
-    messege = temp.to_html()
+    message = temp.to_html()
   
-    # if messege: 
-    #   my_func.voice('경고. 경고메세지를 확인해 주세요')
-     
-
-
+    my_func.voice('영양소 초과하였습니다. 경고메세지를 확인해 주세요')
+    fn = app.url_path_for('static', path='/voice.mp3')
+ 
     return templates.TemplateResponse("print.html", {"request": request, 'food_names': food_list, 
                                                      'email':email, 'gender':gender, 'age_range':age_range, 
                                                      'disease':disease, 'img_path':pred_file_path, 'nutri_list':nutri_list,
-                                                     'dise_info':dise_info, 'messege':messege,
-                                                     'food_info': food_info
+                                                     'dise_info':dise_info, 'message':message,
+                                                     'food_info': food_info, 'fn': fn
+
                                                      }
                                       )
     
@@ -151,6 +150,8 @@ async def get_history(request: Request):
   disease = f.readline()
   f.close()
   
+  my_func.voice('경고. 경고메세지를 확인해 주세요')
+
   ## 로그인 정보 가져오기
   with open('data/data.json', "r") as json_file:
     json_data = json.load(json_file)

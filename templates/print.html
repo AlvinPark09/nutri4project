@@ -16,7 +16,7 @@
     <!-- 타이틀 -->
         <title>Nutrition_4</title>
     <!-- CSS 참조 -->
-        <link rel="stylesheet" href="../../static/style.css" />
+        <link rel="stylesheet" href="../static/style.css" />
     <!-- 폰트 -->
         <link
             href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap"
@@ -40,6 +40,12 @@
             </ol>
         </nav>
         
+        <head>
+            <meta charset="UTF-8">
+            <title>Document</title>
+        </head>
+        
+        <body>
 
         <center>
             <!-- print content .section -->
@@ -83,10 +89,7 @@
                         </div>
                     </div>
                     <div id="tab-4" class="tab-content">
-                        <p>{{ messege | safe }}</p>
-                        <script>
-                            alert('해윙');
-                        </script> 
+                        <p>{{ message | safe }}</p>
                     </div>
                 </div><br>
             
@@ -94,7 +97,14 @@
                 <button type="button" class="btn btn-secondary"><a href='/his' style="color: #ffffff">지금까지 내 음식 섭취 역사 보기</a></button> &nbsp;&nbsp;
             </section>
         </center>
-                   
+        
+        <div>
+            <audio autoplay>
+                <source src= {{ fn }} type="audio/mpeg">
+             </audio>
+        </div>
+
+
         <script>
             const result_02 = spawn('python', ['function_args.py', '카레유', '20']); 
             result_02.stdout.on('data', (result)=>{ 

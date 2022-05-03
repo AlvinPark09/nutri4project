@@ -192,7 +192,7 @@ def voice(text):
     client_id = "fr2pmzwe08"
     client_secret = "uzTbsKj83c57qTJNlHRbeIsTiwDdVoZLKDod8UBh"
     encText = urllib.parse.quote(text)
-    data = "speaker=nsinu&volume=0&speed=-2&pitch=0&format=mp3&text=" + encText
+    data = "speaker=nsinu&volume=0&speed=0&pitch=0&format=mp3&text=" + encText
     url = "https://naveropenapi.apigw.ntruss.com/tts-premium/v1/tts"
     request = urllib.request.Request(url)
     request.add_header("X-NCP-APIGW-API-KEY-ID", client_id)
@@ -201,15 +201,8 @@ def voice(text):
     rescode = response.getcode()
     if(rescode == 200):
         response_body = response.read()
-        with open('voice.mp3', 'wb') as f:
+        with open('./static/voice.mp3', 'wb') as f:
             f.write(response_body)
     else:
         errormsg = ("Error Code:" + rescode)
         return errormsg
-    mixer.init()
-    mixer.music.load('voice.mp3')
-    mixer.music.play()
-    while mixer.music.get_busy(): 
-        pass
-    mixer.music.load("voice_empty.mp3")
-
