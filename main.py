@@ -8,6 +8,7 @@ from fastapi.staticfiles import StaticFiles
 from fastapi import Cookie, FastAPI
 from PIL import Image
 
+import urllib.request
 from pygame import mixer  # Load the popular external library
 import time
 import os
@@ -131,17 +132,10 @@ async def get_page(request: Request, img_s: UploadFile = File(...), disease : st
     temp = temp.style.hide_index()
     messege = temp.to_html()
   
-    if messege:
-      tts = gTTS('경고. 경고메세지를 확인해 주세요', lang='ko') 
-      filename="voice.mp3"
-      tts.save(filename)
-      mixer.init()
-      mixer.music.load(filename)
-      mixer.music.play()
-      while mixer.music.get_busy(): # check if the file is playing
-        pass
-      mixer.music.load("voice_empty.mp3")
-      # os.remove(filename)
+    # if messege: 
+    #   my_func.voice('경고. 경고메세지를 확인해 주세요')
+     
+
 
     return templates.TemplateResponse("print.html", {"request": request, 'food_names': food_list, 
                                                      'email':email, 'gender':gender, 'age_range':age_range, 
